@@ -108,6 +108,31 @@ export default {
               component: './Welcome',
             },
             {
+              path: '/list',
+              icon: 'table',
+              name: 'list',
+              routes: [
+                {
+                  name: 'table-list',
+                  icon: 'smile',
+                  path: '/list/table-list',
+                  component: './list/table-list',
+                },
+                {
+                  name: 'basic-list',
+                  icon: 'smile',
+                  path: '/list/basic-list',
+                  component: './list/foo',
+                },
+                {
+                  name: 'card-list',
+                  icon: 'smile',
+                  path: '/list/card-list',
+                  component: './list/card-list',
+                },
+              ],
+            },
+            {
               path: '/admin',
               name: 'admin',
               icon: 'crown',
