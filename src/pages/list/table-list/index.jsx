@@ -1,4 +1,4 @@
-import { Button, Card, Form, Menu, message } from 'antd';
+import { Button, Card, Form, Modal, message } from 'antd';
 import React, { Component, Fragment } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
@@ -6,6 +6,8 @@ import CreateForm from './components/CreateForm';
 import StandardTable from './components/StandardTable';
 import UpdateForm from './components/UpdateForm';
 import styles from './style.less';
+
+const { confirm } = Modal;
 
 const getValue = obj =>
   Object.keys(obj)
@@ -79,7 +81,21 @@ class TableList extends Component {
           >
             编辑
           </Button>
-          <Button type="danger" onClick={e => this.handleMenuClick(record.key)}>
+          <Button
+            type="danger"
+            onClick={e => {
+              const that = this;
+              confirm({
+                title: '您确定要删除该记录吗',
+                okText: '确定',
+                cancelText: '取消',
+                onOk() {
+                  that.handleMenuClick(record.key);
+                  message.success('删除成功');
+                },
+              });
+            }}
+          >
             删除
           </Button>
           {/* <a onClick={() => this.handleUpdateModalVisible(true, record)}>编辑</a>
