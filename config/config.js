@@ -99,14 +99,14 @@ export default {
           routes: [
             {
               path: '/',
-              redirect: '/welcome',
+              redirect: '/list/table-list',
             },
-            {
-              path: '/welcome',
-              name: 'welcome',
-              icon: 'smile',
-              component: './Welcome',
-            },
+            // {
+            //   path: '/welcome',
+            //   name: 'welcome',
+            //   icon: 'smile',
+            //   component: './Welcome',
+            // },
             {
               path: '/list',
               icon: 'table',
@@ -118,27 +118,27 @@ export default {
                   path: '/list/table-list',
                   component: './list/table-list',
                 },
-                {
-                  name: 'basic-list',
-                  icon: 'smile',
-                  path: '/list/basic-list',
-                  component: './list/foo',
-                },
-                {
-                  name: 'card-list',
-                  icon: 'smile',
-                  path: '/list/card-list',
-                  component: './list/card-list',
-                },
+                // {
+                //   name: 'basic-list',
+                //   icon: 'smile',
+                //   path: '/list/basic-list',
+                //   component: './list/foo',
+                // },
+                // {
+                //   name: 'card-list',
+                //   icon: 'smile',
+                //   path: '/list/card-list',
+                //   component: './list/card-list',
+                // },
               ],
             },
-            {
-              path: '/admin',
-              name: 'admin',
-              icon: 'crown',
-              component: './Admin',
-              authority: ['admin'],
-            },
+            // {
+            //   path: '/admin',
+            //   name: 'admin',
+            //   icon: 'crown',
+            //   component: './Admin',
+            //   authority: ['admin'],
+            // },
             {
               component: './404',
             },
