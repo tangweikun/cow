@@ -19,6 +19,7 @@ export async function addRule(params) {
   });
 }
 export async function updateRule(params) {
+  console.log(params, 'll');
   return request('/api/rule', {
     method: 'POST',
     data: { ...params, method: 'update' },

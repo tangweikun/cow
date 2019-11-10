@@ -1,24 +1,7 @@
-import {
-  Badge,
-  Button,
-  Card,
-  Col,
-  DatePicker,
-  Divider,
-  Dropdown,
-  Form,
-  Icon,
-  Input,
-  InputNumber,
-  Menu,
-  Row,
-  Select,
-  message,
-} from 'antd';
+import { Button, Card, Form, Menu, message } from 'antd';
 import React, { Component, Fragment } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
-import moment from 'moment';
 import CreateForm from './components/CreateForm';
 import StandardTable from './components/StandardTable';
 import UpdateForm from './components/UpdateForm';
@@ -42,6 +25,8 @@ class TableList extends Component {
     selectedRows: [],
     formValues: {},
     stepFormValues: {},
+    selectedValues: {},
+    mode: 'ADD',
   };
 
   columns = [
@@ -85,7 +70,13 @@ class TableList extends Component {
       title: '操作',
       render: (text, record) => (
         <Fragment>
-          <Button type="primary" style={{ marginRight: 10 }}>
+          <Button
+            type="primary"
+            style={{ marginRight: 10 }}
+            onClick={() => {
+              this.setState({ selectedValues: record, modalVisible: true, mode: 'EDIT' });
+            }}
+          >
             编辑
           </Button>
           <Button type="danger" onClick={e => this.handleMenuClick(record.key)}>
@@ -219,16 +210,23 @@ class TableList extends Component {
 
   handleUpdate = fields => {
     const { dispatch } = this.props;
+    console.log(fields);
     dispatch({
       type: 'listAndtableList/update',
       payload: {
         name: fields.name,
         desc: fields.desc,
         key: fields.key,
+        website: fields.website,
+        contract: fields.contract,
+        precision: fields.precision,
+        fee: fields.fee,
+        minTrading: fields.minTrading,
+        tel: fields.tel,
       },
     });
-    message.success('配置成功');
-    this.handleUpdateModalVisible();
+    message.success('更新成功');
+    this.setState({ modalVisible: false });
   };
 
   render() {
@@ -237,12 +235,7 @@ class TableList extends Component {
       loading,
     } = this.props;
     const { selectedRows, modalVisible, updateModalVisible, stepFormValues } = this.state;
-    const menu = (
-      <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
-        <Menu.Item key="remove">删除</Menu.Item>
-        <Menu.Item key="approval">批量审批</Menu.Item>
-      </Menu>
-    );
+
     const parentMethods = {
       handleAdd: this.handleAdd,
       handleModalVisible: this.handleModalVisible,
@@ -256,7 +249,14 @@ class TableList extends Component {
         <Card bordered={false}>
           <div className={styles.tableList}>
             <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
+              <Button
+                icon="plus"
+                type="primary"
+                onClick={() => {
+                  this.handleModalVisible(true);
+                  this.setState({ mode: 'ADD', selectedValues: {} });
+                }}
+              >
                 新建
               </Button>
             </div>
@@ -271,7 +271,13 @@ class TableList extends Component {
             />
           </div>
         </Card>
-        <CreateForm {...parentMethods} modalVisible={modalVisible} />
+        <CreateForm
+          {...parentMethods}
+          handleUpdate={this.handleUpdate}
+          mode={this.state.mode}
+          selectedValues={this.state.selectedValues}
+          modalVisible={modalVisible}
+        />
         {stepFormValues && Object.keys(stepFormValues).length ? (
           <UpdateForm
             {...updateMethods}
