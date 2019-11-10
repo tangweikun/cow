@@ -24,16 +24,10 @@ import StandardTable from './components/StandardTable';
 import UpdateForm from './components/UpdateForm';
 import styles from './style.less';
 
-const FormItem = Form.Item;
-const { Option } = Select;
-
 const getValue = obj =>
   Object.keys(obj)
     .map(key => obj[key])
     .join(',');
-
-const statusMap = ['default', 'processing', 'success', 'error'];
-const status = ['关闭', '运行中', '已上线', '异常'];
 
 /* eslint react/no-multi-comp:0 */
 @connect(({ listAndtableList, loading }) => ({
@@ -91,9 +85,10 @@ class TableList extends Component {
       title: '操作',
       render: (text, record) => (
         <Fragment>
-          <a onClick={() => this.handleUpdateModalVisible(true, record)}>配置</a>
-          <Divider type="vertical" />
-          <a href="">订阅警报</a>
+          <Button>编辑</Button>
+          <Button>删除</Button>
+          {/* <a onClick={() => this.handleUpdateModalVisible(true, record)}>编辑</a>
+          <a href="">删除</a> */}
         </Fragment>
       ),
     },
@@ -218,7 +213,14 @@ class TableList extends Component {
     dispatch({
       type: 'listAndtableList/add',
       payload: {
+        name: fields.name,
         desc: fields.desc,
+        website: fields.website,
+        contract: fields.contract,
+        precision: fields.precision,
+        fee: fields.fee,
+        minTrading: fields.minTrading,
+        tel: fields.tel,
       },
     });
     message.success('添加成功');

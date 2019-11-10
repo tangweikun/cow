@@ -99,7 +99,7 @@ function postRule(req, res, u, b) {
   }
 
   const body = (b && b.body) || req.body;
-  const { method, name, desc, key } = body;
+  const { method, name, desc, key, website, contract, precision, fee, minTrading, tel } = body;
 
   switch (method) {
     /* eslint no-case-declarations:0 */
@@ -110,16 +110,21 @@ function postRule(req, res, u, b) {
     case 'post':
       const i = Math.ceil(Math.random() * 10000);
       tableListDataSource.unshift({
+        id: Math.floor(Math.random() * 1000),
+        name,
+        desc,
+        website,
+        contract,
+        precision,
+        fee,
+        minTrading,
+        tel,
         key: i,
         href: 'https://ant.design',
         avatar: [
           'https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png',
           'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png',
         ][i % 2],
-        name: `TradeCode ${i}`,
-        title: `一个任务名称 ${i}`,
-        owner: '曲丽丽',
-        desc,
         callNo: Math.floor(Math.random() * 1000),
         status: Math.floor(Math.random() * 10) % 2,
         updatedAt: new Date(),
