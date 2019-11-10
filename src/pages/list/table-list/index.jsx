@@ -85,8 +85,12 @@ class TableList extends Component {
       title: '操作',
       render: (text, record) => (
         <Fragment>
-          <Button>编辑</Button>
-          <Button>删除</Button>
+          <Button type="primary" style={{ marginRight: 10 }}>
+            编辑
+          </Button>
+          <Button type="danger" onClick={e => this.handleMenuClick(record.key)}>
+            删除
+          </Button>
           {/* <a onClick={() => this.handleUpdateModalVisible(true, record)}>编辑</a>
           <a href="">删除</a> */}
         </Fragment>
@@ -145,29 +149,15 @@ class TableList extends Component {
     });
   };
 
-  handleMenuClick = e => {
+  handleMenuClick = key => {
     const { dispatch } = this.props;
-    const { selectedRows } = this.state;
-    if (!selectedRows) return;
-
-    switch (e.key) {
-      case 'remove':
-        dispatch({
-          type: 'listAndtableList/remove',
-          payload: {
-            key: selectedRows.map(row => row.key),
-          },
-          callback: () => {
-            this.setState({
-              selectedRows: [],
-            });
-          },
-        });
-        break;
-
-      default:
-        break;
-    }
+    dispatch({
+      type: 'listAndtableList/remove',
+      payload: {
+        key: [key],
+      },
+      callback: () => {},
+    });
   };
 
   handleSelectRows = rows => {
